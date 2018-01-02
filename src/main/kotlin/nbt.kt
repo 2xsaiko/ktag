@@ -26,6 +26,8 @@ interface NBT {
   val strings: View<String, List<String>?>
   val nbts: View<String, List<NBT>?>
 
+  operator fun contains(name: String): Boolean
+
   fun copy(): NBT
 }
 
@@ -50,6 +52,10 @@ internal abstract class NBTBase : NBT {
   override val strings = list({ it.asString() ?: "" }, ::TagString)
   override val nbts = list({ NBTRoot(it.asTagCompound() ?: emptyMap()) as NBT }, { TagCompound((it as NBTBase).tags) })
 
+  override fun contains(name: String): Boolean = name in tags
+
+  override fun copy() = NBTRoot(tags)
+
   private fun <T : Any> sv(read: (TagBase?) -> T?, write: (T) -> TagBase?) =
     view<String, T?>({ key -> read(getv(key)) }, { key, value -> setv(key, value?.let(write)) })
 
@@ -66,8 +72,6 @@ internal abstract class NBTBase : NBT {
   }
 
   abstract var tags: Map<String, TagBase>
-
-  override fun copy() = NBTRoot(tags)
 }
 
 internal class NBTRoot(override var tags: Map<String, TagBase>) : NBTBase() {
