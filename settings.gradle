@@ -1,0 +1,2 @@
+rootProject.name = 'ktag'
+rootProject.buildFileName = 'build.gradle.kts'
