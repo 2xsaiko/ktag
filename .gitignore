@@ -2,4 +2,6 @@
 /build/
 /out/
 
-/ktag.iws
+*.iws
+*.iml
+*.ipr
