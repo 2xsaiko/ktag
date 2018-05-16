@@ -12,12 +12,16 @@ buildscript {
   }
 
   dependencies {
-    classpath(kotlinModule("gradle-plugin", kotlin_version))
+    classpath(kotlin("gradle-plugin", kotlin_version))
   }
 }
 
-apply { from("publish.gradle.kts") }
-apply { plugin("kotlin") }
+plugins { java }
+
+apply {
+  from("publish.gradle")
+  plugin("kotlin")
+}
 
 val kotlin_version: String by extra
 
@@ -26,7 +30,7 @@ repositories {
 }
 
 dependencies {
-  compile(kotlinModule("stdlib-jdk8", kotlin_version))
+  compile(kotlin("stdlib-jdk8", kotlin_version))
 }
 
 tasks.withType<KotlinCompile> {
