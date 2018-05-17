@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "therealfarfetchd.ktag"
-version = "1.0.0"
+version = "1.0.1"
 
 buildscript {
   var kotlin_version: String by extra
