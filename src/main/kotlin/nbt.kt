@@ -26,6 +26,9 @@ interface NBT {
   val strings: View<String, List<String>?>
   val nbts: View<String, List<NBT>?>
 
+  val keys: Collection<String>
+  fun remove(key: String)
+
   operator fun contains(name: String): Boolean
 
   fun copy(): NBT
@@ -51,6 +54,13 @@ internal abstract class NBTBase : NBT {
   override val doubles = list({ it.asDouble() ?: 0.0 }, ::TagDouble)
   override val strings = list({ it.asString() ?: "" }, ::TagString)
   override val nbts = list({ NBTRoot(it.asTagCompound() ?: emptyMap()) as NBT }, { TagCompound((it as NBTBase).tags) })
+
+  override val keys: Collection<String>
+    get() = tags.keys
+
+  override fun remove(key: String) {
+    tags -= key
+  }
 
   override fun contains(name: String): Boolean = name in tags
 
